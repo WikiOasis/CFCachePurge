@@ -39,6 +39,9 @@
 	"Hooks": {
     "FileUpload": {
       "handler": "Main"
+    },
+    "FileDeleteComplete": {
+      "handler": "Main"
     }
 	},
 	"MessagesDirs": {

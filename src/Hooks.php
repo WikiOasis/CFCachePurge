@@ -20,13 +20,20 @@
 namespace MediaWiki\Extension\CFCachePurge;
 
 use MediaWiki\Hook\FileUploadHook;
+use MediaWiki\Hook\FileDeleteCompleteHook;
 
-class Hooks implements FileUploadHook
+class Hooks implements FileUploadHook, FileDeleteCompleteHook
 {
 
     public function onFileUpload($file, $reupload, $hasDescription): void
     {
         wfDebugLog('CFCachePurge', __METHOD__ . ': FileUpload ' . $file->getFullUrl() . ' ' . $file->getSize());
+        $this->purgeCache($file->getFullUrl());
+    }
+
+    public function onFileDeleteComplete($file, $oldimage, $article, $user, $reason): void
+    {
+        wfDebugLog('CFCachePurge', __METHOD__ . ': FileDeleteComplete ' . $file->getFullUrl() . ' ' . $file->getSize());
         $this->purgeCache($file->getFullUrl());
     }
 
