@@ -20,10 +20,16 @@
 namespace MediaWiki\Extension\CFCachePurge;
 
 use MediaWiki\Hook\UploadCompleteHook;
+use MediaWiki\Hook\FileUploadHook;
 
-class Hooks implements UploadCompleteHook {
+class Hooks implements UploadCompleteHook, FileUploadHook {
     public function onUploadComplete( $image ): bool {
-        wfDebugLog( 'CFCachePurge', __METHOD__ . ': Purging cache for ' . $image->getLocalFile()->url );
+        wfDebugLog( 'CFCachePurge', __METHOD__ . ': UploadComplete ' . $image->getLocalFile()->url . ' ' . $image->getLocalFile()->size );
+        return true;
+    }
+
+    public function onFileUpload( $file ): bool {
+        wfDebugLog( 'CFCachePurge', __METHOD__ . ': FileUpload ' . $file->getLocalFile()->url . ' ' . $file->getLocalFile()->size );
         return true;
     }
 }

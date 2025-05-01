@@ -15,13 +15,16 @@
 	},
 	"config": {},
 	"HookHandlers": {
-		"CFCachePurgeHooks": {
+		"Main": {
 			"class": "MediaWiki\\Extension\\CFCachePurge\\Hooks"
 		}
 	},
 	"Hooks": {
     "UploadComplete": {
-      "handler": "CFCachePurgeHooks"
+      "handler": "Main"
+    },
+    "FileUpload": {
+      "handler": "Main"
     }
 	},
 	"MessagesDirs": {
