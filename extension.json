@@ -1,0 +1,32 @@
+{
+	"name": "CFCachePurge",
+	"author": [
+		"Waki285"
+	],
+	"url": "https://www.mediawiki.org/wiki/Special:MyLanguage/Extension:CFCachePurge",
+	"descriptionmsg": "cfcachepurge-desc",
+	"license-name": "GPL-2.0-or-later",
+	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.43.0"
+	},
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\CFCachePurge\\": "src/"
+	},
+	"config": {},
+	"HookHandlers": {
+		"CFCachePurgeHooks": {
+			"class": "MediaWiki\\Extension\\CFCachePurge\\Hooks"
+		}
+	},
+	"Hooks": {
+		"BeforePageDisplay": "CFCachePurgeHooks::onBeforePageDisplay",
+    "UploadComplete": "CFCachePurgeHooks::onUploadComplete"
+	},
+	"MessagesDirs": {
+		"CFCachePurge": [
+			"i18n"
+		]
+	},
+	"manifest_version": 2
+}

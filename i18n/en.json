@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Waki285"
+		]
+	},
+	"cfcachepurge-desc": "Purge Cloudflare cache when a file is edited or deleted."
+}
