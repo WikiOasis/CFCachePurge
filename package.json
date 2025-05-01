@@ -1,5 +1,5 @@
 {
-	"name": "BoilerPlate",
+	"name": "cf-cache-purge",
 	"private": true,
 	"scripts": {
 		"test": "grunt test"
