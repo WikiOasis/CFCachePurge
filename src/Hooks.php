@@ -20,23 +20,13 @@
 namespace MediaWiki\Extension\CFCachePurge;
 
 use MediaWiki\Hook\FileUploadHook;
-use MediaWiki\Logger\LoggerFactory;
 
 class Hooks implements FileUploadHook
 {
-    /**
-     * @var \MediaWiki\Logger\LoggerInterface
-     */
-    private $logger;
-
-    public function __construct()
-    {
-        $this->logger = LoggerFactory::getInstance('CFCachePurge');
-    }
 
     public function onFileUpload($file, $reupload, $hasDescription): void
     {
-        $this->logger->debug('CFCachePurge', __METHOD__ . ': FileUpload ' . $file->getFullUrl() . ' ' . $file->getSize());
+        wfDebugLog('CFCachePurge', __METHOD__ . ': FileUpload ' . $file->getFullUrl() . ' ' . $file->getSize());
         $this->purgeCache($file->getFullUrl());
     }
 
@@ -56,7 +46,7 @@ class Hooks implements FileUploadHook
 
         // $wgCFCachePurgeIgnoreImgAuth が true の場合は、img_auth.php が含まれていた場合パージしない
         if ($wgCFCachePurgeIgnoreImgAuth && strpos($url, 'img_auth.php') !== false) {
-            $this->logger->debug('CFCachePurge', __METHOD__ . ': Ignoring purge for URL with img_auth.php: ' . $url);
+            wfDebugLog('CFCachePurge', __METHOD__ . ': Ignoring purge for URL with img_auth.php: ' . $url);
             return false;
         }
 
@@ -66,7 +56,7 @@ class Hooks implements FileUploadHook
 
         // ホスト名が取得できない場合はパージしない
         if (!$host) {
-            $this->logger->warning('CFCachePurge', __METHOD__ . ': Could not parse host from URL: ' . $url);
+            wfDebugLog('CFCachePurge', __METHOD__ . ': Could not parse host from URL: ' . $url);
             return false;
         }
 
@@ -74,7 +64,7 @@ class Hooks implements FileUploadHook
         if (isset($wgCFCachePurgePurgeableImageHosts) && is_array($wgCFCachePurgePurgeableImageHosts) && !empty($wgCFCachePurgePurgeableImageHosts)) {
             // ホスト名が許可されたリストにない場合はパージしない
             if (!in_array($host, $wgCFCachePurgePurgeableImageHosts, true)) {
-                $this->logger->info('CFCachePurge', __METHOD__ . ': Hostname ' . $host . ' is not in the purgeable list for URL: ' . $url);
+                wfDebugLog('CFCachePurge', __METHOD__ . ': Hostname ' . $host . ' is not in the purgeable list for URL: ' . $url);
                 return false;
             }
         }
@@ -104,20 +94,20 @@ class Hooks implements FileUploadHook
         curl_close($ch);
 
         if ($error) {
-            $this->logger->error('CFCachePurge', __METHOD__ . ': cURL error purging ' . $url . ': ' . $error);
+            wfErrorLog('CFCachePurge', __METHOD__ . ': cURL error purging ' . $url . ': ' . $error);
             return false;
         }
 
         $responseData = json_decode($response, true);
 
         if ($httpCode >= 200 && $httpCode < 300 && isset($responseData['success']) && $responseData['success'] === true) {
-            $this->logger->debug('CFCachePurge', __METHOD__ . ': Successfully purged cache for ' . $url);
+            wfDebugLog('CFCachePurge', __METHOD__ . ': Successfully purged cache for ' . $url);
             return true;
         } else {
             $logMessage = __METHOD__ . ': Failed to purge cache for ' . $url
                 . '. HTTP code: ' . $httpCode
                 . '. Response: ' . $response;
-            $this->logger->error('CFCachePurge', $logMessage);
+            wfErrorLog('CFCachePurge', $logMessage);
             return false;
         }
     }
