@@ -94,7 +94,7 @@ class Hooks implements FileUploadHook
         curl_close($ch);
 
         if ($error) {
-            wfErrorLog('CFCachePurge', __METHOD__ . ': cURL error purging ' . $url . ': ' . $error);
+            wfDebugLog('CFCachePurge', __METHOD__ . ': cURL error purging ' . $url . ': ' . $error);
             return false;
         }
 
@@ -107,7 +107,7 @@ class Hooks implements FileUploadHook
             $logMessage = __METHOD__ . ': Failed to purge cache for ' . $url
                 . '. HTTP code: ' . $httpCode
                 . '. Response: ' . $response;
-            wfErrorLog('CFCachePurge', $logMessage);
+            wfDebugLog('CFCachePurge', $logMessage);
             return false;
         }
     }
