@@ -29,6 +29,6 @@ class Hooks implements UploadCompleteHook, FileUploadHook {
     }
 
     public function onFileUpload( $file, $reupload, $hasDescription ): void {
-        wfDebugLog( 'CFCachePurge', __METHOD__ . ': FileUpload ' . $file->getLocalFile()->url . ' ' . $file->getLocalFile()->size );
+        wfDebugLog( 'CFCachePurge', __METHOD__ . ': FileUpload ' . $file->getFullUrl() . ' ' . $file->getSize() );
     }
 }
