@@ -38,7 +38,7 @@ class Hooks implements FileUploadHook
      */
     private function purgeCache(string $url): bool
     {
-        global $wgCFCachePurgeZoneID, $wgCFCachePurgeAPIToken, $wgCFCachePurgeEmail, $wgCFCachePurgePurgeableImageHosts, $wgCFCachePurgeIgnoreImgAuth;
+        global $wgCFCachePurgeZoneID, $wgCFCachePurgeAPIToken, $wgCFCachePurgePurgeableImageHosts, $wgCFCachePurgeIgnoreImgAuth;
 
         if (empty($wgCFCachePurgeZoneID) || empty($wgCFCachePurgeAPIToken)) {
             throw new \RuntimeException('CloudflareCachePurge configuration error: Zone ID or API Token is missing.');
@@ -72,8 +72,7 @@ class Hooks implements FileUploadHook
 
         $apiUrl = "https://api.cloudflare.com/client/v4/zones/{$wgCFCachePurgeZoneID}/purge_cache";
         $headers = [
-            "X-Auth-Key: {$wgCFCachePurgeAPIToken}",
-            "X-Auth-Email: {$wgCFCachePurgeEmail}",
+            "Authorization: Bearer {$wgCFCachePurgeAPIToken}",
             'Content-Type: application/json',
         ];
         $data = json_encode(['files' => [$url]]);

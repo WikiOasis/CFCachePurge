@@ -22,10 +22,6 @@
       "description": "Cloudflare API Token",
       "value": ""
     },
-    "CFCachePurgeEmail": {
-      "description": "Cloudflare Email",
-      "value": ""
-    },
     "CFCachePurgeIgnoreImgAuth": {
       "description": "Ignore img_auth.php purge requests",
       "value": false
