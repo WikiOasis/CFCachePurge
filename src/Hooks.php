@@ -24,5 +24,6 @@ use MediaWiki\Hook\UploadCompleteHook;
 class Hooks implements UploadCompleteHook {
     public function onUploadComplete( $image ): bool {
         wfDebugLog( 'CFCachePurge', __METHOD__ . ': Purging cache for ' . $image->getLocalFile()->url );
+        return true;
     }
 }
