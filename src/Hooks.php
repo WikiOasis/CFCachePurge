@@ -72,7 +72,7 @@ class Hooks implements FileUploadHook
 
         $apiUrl = "https://api.cloudflare.com/client/v4/zones/{$wgCFCachePurgeZoneID}/purge_cache";
         $headers = [
-            "X-Auth-Key: Bearer {$wgCFCachePurgeAPIToken}",
+            "X-Auth-Key: {$wgCFCachePurgeAPIToken}",
             "X-Auth-Email: {$wgCFCachePurgeEmail}",
             'Content-Type: application/json',
         ];
