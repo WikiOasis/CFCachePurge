@@ -13,16 +13,34 @@
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\CFCachePurge\\": "src/"
 	},
-	"config": {},
+	"config": {
+    "CFCachePurgeZoneID": {
+      "description": "Cloudflare Zone ID",
+      "value": ""
+    },
+    "CFCachePurgeAPIToken": {
+      "description": "Cloudflare API Token",
+      "value": ""
+    },
+    "CFCachePurgeEmail": {
+      "description": "Cloudflare Email",
+      "value": ""
+    },
+    "CFCachePurgeIgnoreImgAuth": {
+      "description": "Ignore img_auth.php purge requests",
+      "value": false
+    },
+    "CFCachePurgePurgeableImageHosts": {
+      "description": "Purgeable image hosts",
+      "value": []
+    }
+  },
 	"HookHandlers": {
 		"Main": {
 			"class": "MediaWiki\\Extension\\CFCachePurge\\Hooks"
 		}
 	},
 	"Hooks": {
-    "UploadComplete": {
-      "handler": "Main"
-    },
     "FileUpload": {
       "handler": "Main"
     }
