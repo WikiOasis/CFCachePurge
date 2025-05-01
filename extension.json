@@ -20,8 +20,9 @@
 		}
 	},
 	"Hooks": {
-		"BeforePageDisplay": "CFCachePurgeHooks::onBeforePageDisplay",
-    "UploadComplete": "CFCachePurgeHooks::onUploadComplete"
+    "UploadComplete": {
+      "handler": "CFCachePurgeHooks"
+    }
 	},
 	"MessagesDirs": {
 		"CFCachePurge": [
