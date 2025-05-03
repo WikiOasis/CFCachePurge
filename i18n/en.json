@@ -9,6 +9,7 @@
   "cfcachepurge-special-intro": "You can purge the Cloudflare cache in load.php on this page.\n\nPurging the cache may improve gadget and other loading problems, but may slow down the initial page load.\n\nNote: This page only purges the Cloudflare, or server-side cache, and does not purge the cache stored on your and other users' devices.",
   "cfcachepurge-purge": "Purge",
   "cfcachepurge-purge-success": "Cache purge successful.",
+  "cfcachepurge-purge-failure": "Cache purge failed. Please try again or contact the system administrator.",
 	"cfcachepurge-form-legend": "Purge Options",
   "right-cfcachepurge": "Purge Cloudflare cache",
   "action-cfcachepurge": "to purge Cloudflare cache"

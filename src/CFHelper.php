@@ -13,57 +13,82 @@ class CFHelper
      */
     public static function purgeUrls(array $urls): array
     {
+        return self::sendPurgeRequest(['files' => $urls]);
+    }
+
+    /**
+     * Purges the cache for the given prefixes using the Cloudflare API.
+     *
+     * @param array $prefixes Array of URL prefixes to purge.
+     * @return array{success: bool, errors: array, messages: array} Result from Cloudflare API or error details.
+     */
+    public static function purgePrefixes(array $prefixes): array
+    {
+        return self::sendPurgeRequest(['prefixes' => $prefixes]);
+    }
+
+    /**
+     * Sends a purge request to the Cloudflare API.
+     *
+     * @param array $data Purge data (e.g., ['files' => [...]] or ['prefixes' => [...]]).
+     * @return array{success: bool, errors: array, messages: array} Result from Cloudflare API or error details.
+     * @throws MWException If configuration is missing.
+     */
+    private static function sendPurgeRequest(array $data): array
+    {
         global $wgCFCachePurgeZoneID, $wgCFCachePurgeAPIToken;
 
         if (empty($wgCFCachePurgeZoneID) || empty($wgCFCachePurgeAPIToken)) {
-            // Log the error instead of throwing an exception to avoid breaking the hook flow
-            wfDebugLog('CFCachePurge', __METHOD__ . ': CloudflareCachePurge configuration error: Zone ID or API Token is missing.');
-            throw new \MWException('CloudflareCachePurge configuration error: Zone ID or API Token is missing.');
+            $errorMsg = 'CloudflareCachePurge configuration error: Zone ID or API Token is missing.';
+            // Log the error using the global wfDebugLog function
+            wfDebugLog('CFCachePurge', __METHOD__ . ': ' . $errorMsg);
+            throw new MWException($errorMsg);
         }
-
 
         $apiUrl = "https://api.cloudflare.com/client/v4/zones/{$wgCFCachePurgeZoneID}/purge_cache";
         $headers = [
             "Authorization: Bearer {$wgCFCachePurgeAPIToken}",
             'Content-Type: application/json',
         ];
-        $data = json_encode(['files' => $urls]);
+        $jsonData = json_encode($data);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $apiUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        // It's good practice to set a timeout
         curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 10 seconds timeout
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 seconds connection timeout
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $error = curl_error($ch);
+        $curlError = curl_error($ch);
         curl_close($ch);
 
-        if ($error) {
-            wfDebugLog('CFCachePurge', __METHOD__ . ': cURL error purging ' . implode(', ', $urls) . ': ' . $error);
-            return ['success' => false, 'errors' => [['code' => 0, 'message' => 'cURL error: ' . $error]], 'messages' => []];
+        $logContext = json_encode($data); // Log what was attempted to be purged
+
+        if ($curlError) {
+            // Log the error using the global wfDebugLog function
+            wfDebugLog('CFCachePurge', __METHOD__ . ": cURL error purging {$logContext}: " . $curlError);
+            return ['success' => false, 'errors' => [['code' => 0, 'message' => 'cURL error: ' . $curlError]], 'messages' => []];
         }
 
         $responseData = json_decode($response, true);
 
         if ($httpCode >= 200 && $httpCode < 300 && isset($responseData['success']) && $responseData['success'] === true) {
-            wfDebugLog('CFCachePurge', __METHOD__ . ': Successfully requested cache purge for ' . implode(', ', $urls));
+            // Log success using the global wfDebugLog function
+            wfDebugLog('CFCachePurge', __METHOD__ . ": Successfully requested cache purge for {$logContext}");
             return $responseData;
         } else {
-            $logMessage = __METHOD__ . ': Failed to purge cache for ' . implode(', ', $urls)
+            $logMessage = __METHOD__ . ": Failed to purge cache for {$logContext}"
                 . '. HTTP code: ' . $httpCode
                 . '. Response: ' . $response;
+            // Log failure using the global wfDebugLog function
             wfDebugLog('CFCachePurge', $logMessage);
-            if (is_array($responseData) && isset($responseData['errors'])) {
-                return ['success' => false, 'errors' => $responseData['errors'], 'messages' => $responseData['messages'] ?? []];
-            } else {
-                return ['success' => false, 'errors' => [['code' => $httpCode, 'message' => 'API request failed. Response: ' . $response]], 'messages' => []];
-            }
+            $errors = (isset($responseData['errors']) && is_array($responseData['errors'])) ? $responseData['errors'] : [['code' => $httpCode, 'message' => 'API request failed. Response: ' . $response]];
+            $messages = (isset($responseData['messages']) && is_array($responseData['messages'])) ? $responseData['messages'] : [];
+            return ['success' => false, 'errors' => $errors, 'messages' => $messages];
         }
     }
 }
