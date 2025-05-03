@@ -20,7 +20,7 @@ class SpecialCFCachePurge extends SpecialPage
         $output = $this->getOutput();
         $output->setPageTitle($this->msg('cfcachepurge-special-title'));
 
-        $output->addHtml($this->msg('cfcachepurge-special-intro')->parse());
+        $output->addHtml($this->msg('cfcachepurge-special-intro')->escaped());
 
         $formDescriptor = [];
 
