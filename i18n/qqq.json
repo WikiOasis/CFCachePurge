@@ -8,6 +8,8 @@
   "cfcachepurge-special-title": "Title of Special:CFCachePurge",
   "cfcachepurge-special-intro": "Intro text for Special:CFCachePurge",
   "cfcachepurge-purge": "Purge button text",
+  "cfcachepurge-purge-success": "successful purge message",
+	"cfcachepurge-form-legend": "Purge Options",
   "right-cfcachepurge": "{{doc-right|cfcachepurge}}",
   "action-cfcachepurge": "{{doc-action|cfcachepurge}}"
 }
