@@ -46,7 +46,7 @@
     "CFCachePurge": ["i18n"]
   },
   "SpecialPages": {
-    "CFCachePurge": "MediaWiki\\Extension\\CFCachePurge\\Specials\\CFCachePurge"
+    "CFCachePurge": "MediaWiki\\Extension\\CFCachePurge\\SpecialCFCachePurge"
   },
   "ExtensionMessagesFiles": {
     "CFCachePurgeAlias": "CFCachePurge.i18n.alias.php"
