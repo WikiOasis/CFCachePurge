@@ -42,7 +42,6 @@ class SpecialCFCachePurge extends SpecialPage {
         $htmlForm->setAction( $this->getPageTitle()->getLocalURL() );
         $htmlForm->setSubmitName( 'purge' );
         $htmlForm->setSubmitTextMsg( 'cfcachepurge-purge' );
-        $htmlForm->setSubmitProgressive();
         $htmlForm->prepareForm();
         $htmlForm->displayForm( false );
 
