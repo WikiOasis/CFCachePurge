@@ -29,21 +29,14 @@ class SpecialCFCachePurge extends SpecialPage {
 
         $output->addHtml( $this->msg( 'cfcachepurge-special-intro' )->parse() );
 
-        $formDescriptor = [
-            'purgebutton' => [
-                'type' => 'submit',
-                'default' => $this->msg( 'cfcachepurge-purge' )->text(),
-                'flags' => [ 'progressive', 'primary' ],
-            ],
-        ];
+        $formDescriptor = [];
 
         $htmlForm = new HTMLForm( $formDescriptor, $this->getContext() );
         $htmlForm->setMethod( 'post' );
         $htmlForm->setAction( $this->getPageTitle()->getLocalURL() );
         $htmlForm->setSubmitName( 'purge' );
         $htmlForm->setSubmitTextMsg( 'cfcachepurge-purge' );
-        $htmlForm->prepareForm();
-        $htmlForm->displayForm( false );
+        $htmlForm->show();
 
     }
 
