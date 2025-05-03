@@ -17,16 +17,6 @@ class SpecialCFCachePurge extends SpecialPage {
         $output = $this->getOutput();
         $output->setPageTitle( $this->msg( 'cfcachepurge-special-title' ) );
 
-        $request = $this->getRequest();
-
-        if ( $request->wasPosted() && $this->getUser()->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
-            $this->getOutput()->addHTML(
-                Html::successBox(
-                    $this->msg( 'cfcachepurge-purge-success' )->escaped()
-                )
-            );
-        }
-
         $output->addHtml( $this->msg( 'cfcachepurge-special-intro' )->parse() );
 
         $formDescriptor = [];
@@ -35,9 +25,20 @@ class SpecialCFCachePurge extends SpecialPage {
         $htmlForm->setMethod( 'post' );
         $htmlForm->setAction( $this->getPageTitle()->getLocalURL() );
         $htmlForm->setSubmitName( 'purge' );
+        $htmlForm->setSubmitCallback( [ $this, 'processInput' ] ); 
         $htmlForm->setSubmitTextMsg( 'cfcachepurge-purge' );
         $htmlForm->show();
 
+    }
+
+    public function processInput( $input ) {
+        $output = $this->getOutput();
+        $output->addHTML(
+            Html::successBox(
+                $this->msg( 'cfcachepurge-purge-success' )->escaped()
+            )
+        );
+        return true;
     }
 
     public function getGroupName() {
