@@ -37,7 +37,7 @@ class SpecialCFCachePurge extends SpecialPage {
             ],
         ];
 
-        $htmlForm = \HTMLForm::create( $formDescriptor, $this->getContext() );
+        $htmlForm = new HTMLForm( $formDescriptor, $this->getContext() );
         $htmlForm->setMethod( 'post' );
         $htmlForm->setAction( $this->getPageTitle()->getLocalURL() );
         $htmlForm->setSubmitName( 'purge' );
