@@ -34,6 +34,7 @@ class SpecialCFCachePurge extends SpecialPage {
         $htmlForm = new HTMLForm( $formDescriptor, $this->getContext() );
         $htmlForm->setMethod( 'post' );
         $htmlForm->setAction( $this->getPageTitle()->getLocalURL() );
+        $htmlForm->setSubmitDestructive();
         $htmlForm->setSubmitName( 'purge' );
         $htmlForm->setSubmitTextMsg( 'cfcachepurge-purge' );
         $htmlForm->show();
@@ -44,3 +45,5 @@ class SpecialCFCachePurge extends SpecialPage {
         return 'other';
     }
 }
+
+$wgSpecialPages['CFCachePurge'] = 'SpecialCFCachePurge';
