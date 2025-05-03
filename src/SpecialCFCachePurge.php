@@ -36,7 +36,7 @@ class SpecialCFCachePurge extends SpecialPage
 
     public function processInput($input)
     {
-        $result = CFHelper::purgePrefixes([(empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . '/load.php']);
+        $result = CFHelper::purgePrefixes([$_SERVER['HTTP_HOST'] . '/load.php']);
         $output = $this->getOutput();
         if ($result['success']) {
             $output->addHTML(
