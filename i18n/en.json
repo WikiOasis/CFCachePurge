@@ -10,7 +10,7 @@
   "cfcachepurge-purge": "Purge",
   "cfcachepurge-purge-success": "Cache purge successful.",
   "cfcachepurge-purge-failure": "Cache purge failed. Please try again or contact the system administrator.",
-  "cfcachepurge-purge-throttled": "You or another user have already purged the cache recently. Please wait $1 seconds before trying again.",
+  "cfcachepurge-purge-throttled": "You or another user have already purged the cache recently. Please wait few seconds before trying again.",
 	"cfcachepurge-form-legend": "Purge Options",
   "right-cfcachepurge": "Purge Cloudflare cache",
   "action-cfcachepurge": "to purge Cloudflare cache"

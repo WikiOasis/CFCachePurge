@@ -51,6 +51,14 @@
   "ExtensionMessagesFiles": {
     "CFCachePurgeAlias": "CFCachePurge.i18n.alias.php"
   },
+  "RateLimits": {
+		"cfcachepurge": {
+			"user": [
+				1,
+				60
+			]
+		}
+	},
   "AvailableRights": ["cfcachepurge"],
   "manifest_version": 2
 }

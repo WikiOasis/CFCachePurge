@@ -10,7 +10,7 @@
   "cfcachepurge-purge": "Purge button text",
   "cfcachepurge-purge-success": "successful purge message",
   "cfcachepurge-purge-failure": "failed purge message",
-  "cfcachepurge-purge-throttled": "throttled purge message\n$1 ... seconds",
+  "cfcachepurge-purge-throttled": "throttled purge message",
 	"cfcachepurge-form-legend": "Purge Options",
   "right-cfcachepurge": "{{doc-right|cfcachepurge}}",
   "action-cfcachepurge": "{{doc-action|cfcachepurge}}"
