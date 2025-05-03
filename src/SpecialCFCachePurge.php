@@ -31,7 +31,7 @@ class SpecialCFCachePurge extends SpecialPage {
 
         $formDescriptor = [];
 
-        $htmlForm = new HTMLForm( $formDescriptor, $this->getContext() );
+        $htmlForm = HTMLForm::factory( 'ooui', $formDescriptor, $this->getContext() );
         $htmlForm->setMethod( 'post' );
         $htmlForm->setAction( $this->getPageTitle()->getLocalURL() );
         $htmlForm->setSubmitName( 'purge' );
@@ -43,10 +43,6 @@ class SpecialCFCachePurge extends SpecialPage {
     public function getGroupName() {
         return 'other';
     }
-
-    protected function getDisplayFormat() {
-		return 'ooui';
-	}
 }
 
 $wgSpecialPages['CFCachePurge'] = 'SpecialCFCachePurge';
