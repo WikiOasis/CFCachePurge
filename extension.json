@@ -1,19 +1,17 @@
 {
-	"name": "CFCachePurge",
-	"author": [
-		"Waki285"
-	],
-	"url": "https://www.mediawiki.org/wiki/Special:MyLanguage/Extension:CFCachePurge",
-	"descriptionmsg": "cfcachepurge-desc",
-	"license-name": "GPL-2.0-or-later",
-	"type": "other",
-	"requires": {
-		"MediaWiki": ">= 1.43.0"
-	},
-	"AutoloadNamespaces": {
-		"MediaWiki\\Extension\\CFCachePurge\\": "src/"
-	},
-	"config": {
+  "name": "CFCachePurge",
+  "author": ["Waki285"],
+  "url": "https://www.mediawiki.org/wiki/Special:MyLanguage/Extension:CFCachePurge",
+  "descriptionmsg": "cfcachepurge-desc",
+  "license-name": "GPL-2.0-or-later",
+  "type": "other",
+  "requires": {
+    "MediaWiki": ">= 1.43.0"
+  },
+  "AutoloadNamespaces": {
+    "MediaWiki\\Extension\\CFCachePurge\\": "src/"
+  },
+  "config": {
     "CFCachePurgeZoneID": {
       "description": "Cloudflare Zone ID",
       "value": ""
@@ -31,23 +29,28 @@
       "value": []
     }
   },
-	"HookHandlers": {
-		"Main": {
-			"class": "MediaWiki\\Extension\\CFCachePurge\\Hooks"
-		}
-	},
-	"Hooks": {
+  "HookHandlers": {
+    "Main": {
+      "class": "MediaWiki\\Extension\\CFCachePurge\\Hooks"
+    }
+  },
+  "Hooks": {
     "FileUpload": {
       "handler": "Main"
     },
     "FileDeleteComplete": {
       "handler": "Main"
     }
-	},
-	"MessagesDirs": {
-		"CFCachePurge": [
-			"i18n"
-		]
-	},
-	"manifest_version": 2
+  },
+  "MessagesDirs": {
+    "CFCachePurge": ["i18n"]
+  },
+  "SpecialPages": {
+    "CFCachePurge": "MediaWiki\\Extension\\CFCachePurge\\Specials\\CFCachePurge"
+  },
+  "ExtensionMessagesFiles": {
+    "CFCachePurgeAlias": "CFCachePurge.i18n.alias.php"
+  },
+  "AvailableRights": ["cfcachepurge"],
+  "manifest_version": 2
 }

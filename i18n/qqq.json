@@ -4,5 +4,10 @@
 			"Waki285"
 		]
 	},
-	"cfcachepurge-desc": "{{desc|name=CFCachePurge|url=https://www.mediawiki.org/wiki/Extension:CFCachePurge}}"
+	"cfcachepurge-desc": "{{desc|name=CFCachePurge|url=https://www.mediawiki.org/wiki/Extension:CFCachePurge}}",
+  "cfcachepurge-special-title": "Title of Special:CFCachePurge",
+  "cfcachepurge-special-intro": "Intro text for Special:CFCachePurge",
+  "cfcachepurge-purge": "Purge button text",
+  "right-cfcachepurge": "{{doc-right|cfcachepurge}}",
+  "action-cfcachepurge": "{{doc-action|cfcachepurge}}"
 }
