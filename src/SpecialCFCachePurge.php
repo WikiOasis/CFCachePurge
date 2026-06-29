@@ -2,9 +2,9 @@
 
 namespace MediaWiki\Extension\CFCachePurge;
 
-use SpecialPage;
-use Html;
-use HTMLForm;
+use MediaWiki\SpecialPage\SpecialPage;
+use MediaWiki\Html\Html;
+use MediaWiki\HTMLForm\HTMLForm;
 
 class SpecialCFCachePurge extends SpecialPage
 {
@@ -18,7 +18,7 @@ class SpecialCFCachePurge extends SpecialPage
         $this->setHeaders();
         $this->checkPermissions();
         $output = $this->getOutput();
-        $output->setPageTitle($this->msg('cfcachepurge-special-title'));
+        $output->setPageTitle($this->msg('cfcachepurge-special-title')->text());
 
         $output->addHtml($this->msg('cfcachepurge-special-intro')->escaped());
 
