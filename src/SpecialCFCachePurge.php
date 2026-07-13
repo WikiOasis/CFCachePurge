@@ -45,7 +45,7 @@ class SpecialCFCachePurge extends SpecialPage
             );
             return false;
 		}
-        $result = CFHelper::purgePrefixes([$_SERVER['HTTP_HOST'] . '/load.php']);
+        $result = CFHelper::purgePrefixes([$_SERVER['HTTP_HOST'] . '/w/load.php']);
         if ($result['success']) {
             $output->addHTML(
                 Html::successBox(
