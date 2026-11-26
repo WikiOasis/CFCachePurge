@@ -10,7 +10,12 @@ class SpecialCFCachePurge extends SpecialPage
 {
     public function __construct()
     {
-        parent::__construct('CFCachePurge', 'cfcachepurge');
+        parent::__construct('CFCachePurge');
+    }
+
+    public function getRestriction(): string
+    {
+        return 'cfcachepurge';
     }
 
     public function execute($subPage)
